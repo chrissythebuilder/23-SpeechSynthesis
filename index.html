@@ -56,14 +56,25 @@
     }
 
     // stops and plays the voice as the user selects in the dropdown menu
-    function toggle() {
+    function toggle(startOver = true) {
         speechSynthesis.cancel();
-        speechSynthesis.speak(msg);
+        if (startOver) {
+            speechSynthesis.speak(msg);
+        }
     }
 
+    // to change value of rate, pitch and text input
+    function setOption() {
+        console.log(this.name, this.value);
+        msg[this.name] = this.value;
+        toggle(); 
+    }
 
     speechSynthesis.addEventListener("voiceschanged", populateVoices);
     voicesDropdown.addEventListener("change", setVoice);
+    options.forEach(option => option.addEventListener("change", setOption));
+    speakButton.addEventListener("click", toggle);
+    stopButton.addEventListener("click", toggle.bind(null, false));
 </script>
 
 </body>
