@@ -52,7 +52,15 @@
     // will be used for respective voices to work once it's been selected from the dropdown
     function setVoice() {
         msg.voice = voices.find(voice => voice.name === this.value);
+        toggle();
     }
+
+    // stops and plays the voice as the user selects in the dropdown menu
+    function toggle() {
+        speechSynthesis.cancel();
+        speechSynthesis.speak(msg);
+    }
+
 
     speechSynthesis.addEventListener("voiceschanged", populateVoices);
     voicesDropdown.addEventListener("change", setVoice);
